@@ -1,0 +1,12 @@
+body{
+    color:gray;
+    font-size: 16pt;
+}
+h1{
+    color: red;
+    font-size: 60pt;
+    text-align: left;
+}
+p{
+    margin: 10px;
+}
