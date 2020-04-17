@@ -1,6 +1,9 @@
 from django import forms
-
+from .models import Company
 class CompanyForm(forms.Form):
+     class Meta:
+          model = Company
+
      company = forms.CharField(label='company')
      location = forms.CharField(label='location')
      office = forms.CharField(label='office')

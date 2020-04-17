@@ -11,4 +11,7 @@ class Company(models.Model):
      averageAge = models.IntegerField()
      startingSales = models.IntegerField()
      workingHours = models.IntegerField()
-    #  後でテンプレートの整形をする
+     
+     def __str__(self):
+        return '<Friend:id=' + str(self.id) + ',' + \
+            self.company + '(' + str(self.sales) +')>'

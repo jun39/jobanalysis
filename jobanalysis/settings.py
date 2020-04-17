@@ -39,9 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'inputApp',
+    'inputApp.apps.InputappConfig',
     'comparisonApp',
-    'accounts',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -84,6 +84,9 @@ DATABASES = {
         'NAME': 'analisisdb', 
         'USER': 'root', 
         'PASSWORD': env('DB_PASS'),
+        'OPTIONS': {
+            'autocommit': True,
+        },
         'HOST': '',
         'PORT': '3306',
     }

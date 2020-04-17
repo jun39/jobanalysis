@@ -5,14 +5,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>title</title>
-    <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'inputApp/css/style.css' %}"/>
 </head>
 <body>
     <h1>{{title}}</h1>
-    <form action="{% url 'index' %}" method="post">
-        {% csrf_token %}
-        {{form}}
-        <input type="submit" value="送信">
-    </form>
+    <p>{{message|safe}}</p>
+    <table>
+        <tr>
+            <th>会社名</th>
+            <th>所在地</th>
+            <th>勤務地</th>
+            <th>創設年</th>
+            <th>資本金</th>
+            <th>売り上げ</th>
+            <th>従業員数</th>
+            <th>平均年齢</th>
+            <th>初年度売り上げ</th>
+            <th>平均勤務時間</th>
+        </tr>
+        
+        {% for item in data %}
+        <tr>
+            <td>{{item.id}}</td>
+            <td>{{item.company}}</td>
+            <td>{{item.office}}</td>
+            <td>{{item.establishment}}</td>
+            <td>{{item.capitalStock}}</td>
+            <td>{{item.sales}}</td>
+            <td>{{item.employees}}</td>
+            <td>{{item.averageAge}}</td>
+            <td>{{item.startingSales}}</td>
+            <td>{{item.workingHours}}</td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>
