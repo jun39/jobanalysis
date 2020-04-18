@@ -36,17 +36,8 @@
         </tr>
         {% for item in data %}
         <tr>
-            <td>{{item.company}}</td>
-            <td>{{item.location}}</td>
-            <td>{{item.office}}</td>
-            <td>{{item.establishment}}</td>
-            <td>{{item.capitalStock}}</td>
-            <td>{{item.sales}}</td>
-            <td>{{item.employees}}</td>
-            <td>{{item.averageAge}}</td>
-            <td>{{item.startingSales}}</td>
-            <td>{{item.workingHours}}</td>
-            <td><a href="{% url 'edit' item.id %}">Edit</a></td>
+            <td>{{item}}</td>
+
         </tr>
         {% endfor %}
     </table>

@@ -3,31 +3,30 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from .models import Company
 from .forms import CompanyForm
-
+from .forms import SearchForm
 def index(request):
-    data = Company.objects.all()
     params = {
         'title':'登録した企業情報',
         'message':'全ての登録した企業情報',
-        'form':CompanyForm(),
+        'form':SearchForm(),
         'data':[],
     }
     if (request.method == 'POST'):
         num = request.POST['id']
-        n = request.POST['name']
-        item = Company.objects.get(id = num,company=n)
+        na = request.POST['name']
+        item = Company.objects.get(id = num,company=na)
         params['data'] = [item]
-        params['form'] = CompanyForm(request.POST)
+        params['form'] = SearchForm(request.POST)
     else:
         params['data'] = Company.objects.all()
     return render(request,'inputApp/list.html',params)
 
 def create(request):
     if (request.method == 'POST'):
-         obj = Company()
-         company = CompanyForm(request.POST,instance=obj)
-         company.save()
-         return redirect(to='/inputApp')
+        obj = Company()
+        company = CompanyForm(request.POST,instance=obj)
+        company.save()
+        return redirect(to='/inputApp')
     params ={
         'title':'企業情報を入力しました',
         'form':CompanyForm(),

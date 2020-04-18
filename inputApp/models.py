@@ -11,7 +11,6 @@ class Company(models.Model):
      averageAge = models.IntegerField()
      startingSales = models.IntegerField()
      workingHours = models.IntegerField()
-
      def __str__(self):
         return '<company:id=' + str(self.id) + ',' + \
             self.company + '(' + str(self.sales) +')>'
