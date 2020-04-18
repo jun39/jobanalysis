@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>title</title>
+    <link rel="stylesheet" href="{% static 'inputApp/css/style.css' %}"/>
+</head>
+<body>
+    <h1>{{title}}</h1>
+    <h2>以下の企業情報を削除します</h2>
+    <table>
+        <tr>
+            <th>会社名</th>
+            <td>{{obj.company}}</td>
+        </tr>
+        <tr>
+            <th>所在地</th>
+            <td>{{obj.location}}</td>
+        </tr>
+        <tr>
+            <th>勤務地</th>
+            <td>{{obj.office}}</td>
+        </tr>
+        <tr>
+            <th>創設年</th>
+            <td>{{obj.establishment}}</td>
+        </tr>
+        <tr>
+            <th>資本金</th>
+            <td>{{obj.capitalStock}}</td>
+        </tr>
+        <tr>
+            <th>売り上げ</th>
+            <td>{{obj.sales}}</td>
+        </tr>
+        <tr>
+            <th>従業員数</th>
+            <td>{{obj.employees}}</td>
+        </tr>
+        <tr>
+            <th>平均年齢</th>
+            <td>{{obj.averageAge}}</td>
+        </tr>
+        <tr>
+            <th>初年度売り上げ</th>
+            <td>{{obj.startingSales}}</td>
+        </tr>
+        <tr>
+            <th>平均勤務時間</th>
+            <td>{{obj.workingHours}}</td>
+        </tr>
+        <form action="{% url 'delete' id %}" method="post">
+           {% csrf_token %}
+           <tr>
+               <th>削除ボタン</th>
+               <td> <input type="submit" value="click"></td>
+           </tr>
+        </form>
+    </table>
+</body>
+</html>

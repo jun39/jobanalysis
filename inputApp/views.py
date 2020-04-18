@@ -45,3 +45,15 @@ def edit(request,num):
         'form':CompanyForm(instance=obj),
     }
     return render(request,'inputApp/edit.html',params)
+
+def delete(request,num):
+    company = Company.objects.get(id=num)
+    if(request.method == 'POST'):
+        company.delete()
+        return redirect(to='/inputApp')
+    params = {
+       'title':'選択した企業情報',
+       'id':num,
+       'obj':company,
+    }
+    return render(request,'inputApp/delete.html',params)
