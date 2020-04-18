@@ -13,5 +13,15 @@ class Company(models.Model):
      startingSales = models.IntegerField()
      workingHours = models.IntegerField()
      def __str__(self):
-        return '<company:id=' + str(self.id) + ',' + \
-            self.company + '(' + str(self.sales) +')>'
+        return ' id名:' + str(self.id) + ',' + self.company
+
+class Comment(models.Model):
+        company = models.ForeignKey(Company, on_delete=models.CASCADE)
+        title = models.CharField(max_length=100)
+        content = models.CharField(max_length=300)
+        pub_date = models.DateTimeField(auto_now_add=True)
+        def __str__(self):
+            return '<company:id=' + str(self.id) + ',' + str(self.company) + '(' + str(self.pub_date) +')>'
+    
+        class Meta:
+            ordering = ('pub_date',)
