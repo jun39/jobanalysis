@@ -11,6 +11,17 @@
     <h1>{{title}}</h1>
     <p>{{message|safe}}</p>
     <table>
+    <form action="{% url 'index' %}" method="post">
+        {% csrf_token %}
+        {{form.as_table}}
+        <tr>
+            <td></td>
+            <td><input type="submit" value="click"></td>
+        </tr>
+    </form>
+    </table>
+    <hr>
+    <table>
         <tr>
             <th>会社名</th>
             <th>所在地</th>
@@ -23,11 +34,10 @@
             <th>初年度売り上げ</th>
             <th>平均勤務時間</th>
         </tr>
-        
         {% for item in data %}
         <tr>
-            <td>{{item.id}}</td>
             <td>{{item.company}}</td>
+            <td>{{item.location}}</td>
             <td>{{item.office}}</td>
             <td>{{item.establishment}}</td>
             <td>{{item.capitalStock}}</td>
@@ -36,6 +46,7 @@
             <td>{{item.averageAge}}</td>
             <td>{{item.startingSales}}</td>
             <td>{{item.workingHours}}</td>
+            <td><a href="{% url 'edit' item.id %}">Edit</a></td>
         </tr>
         {% endfor %}
     </table>

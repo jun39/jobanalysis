@@ -9,27 +9,40 @@ def index(request):
     params = {
         'title':'登録した企業情報',
         'message':'全ての登録した企業情報',
-        'date':data,
+        'form':CompanyForm(),
+        'data':[],
     }
+    if (request.method == 'POST'):
+        num = request.POST['id']
+        n = request.POST['name']
+        item = Company.objects.get(id = num,company=n)
+        params['data'] = [item]
+        params['form'] = CompanyForm(request.POST)
+    else:
+        params['data'] = Company.objects.all()
     return render(request,'inputApp/list.html',params)
 
 def create(request):
+    if (request.method == 'POST'):
+         obj = Company()
+         company = CompanyForm(request.POST,instance=obj)
+         company.save()
+         return redirect(to='/inputApp')
     params ={
         'title':'企業情報を入力しました',
         'form':CompanyForm(),
     }
-    if (request.method == 'POST'):
-         company = request.POST['company']
-         location = request.POST['location']
-         office = request.POST['office']
-         establishment = request.POST['establishment']
-         capitalStock = request.POST['capitalStock']
-         sales = request.POST['sales']
-         employees = request.POST['employees']
-         averageAge = request.POST['averageAge']
-         startingSales = request.POST['startingSales']
-         workingHours = request.POST['workingHours']
-         company = Company(company=company,location=location,office=office,establishment=establishment,capitalStock=capitalStock,sales=sales,employees=employees,averageAge=averageAge,startingSales=startingSales,workingHours=workingHours)
-         company.save()
-         return redirect(to='/inputApp')
     return render(request,'inputApp/create.html', params)
+
+def edit(request,num):
+    obj = Company.objects.get(id=num)
+    if(request.method=='POST'):
+        company =CompanyForm(request.POST,instance=obj)
+        company.save()
+        return redirect(to='/inputApp')
+    params ={
+        'title':'企業情報を編集してください',
+        'id':num,
+        'form':CompanyForm(instance=obj),
+    }
+    return render(request,'inputApp/edit.html',params)
