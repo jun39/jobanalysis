@@ -1,8 +1,7 @@
 from django import forms
 from .models import Company
-class SearchForm(forms.Form):
-     id = forms.IntegerField(label='ID')
-     name = forms.CharField(label='会社名')
+class FindForm(forms.Form):
+     find = forms.CharField(label='検索フォーム',required=False)
 
 class CompanyForm(forms.ModelForm):
      class Meta:

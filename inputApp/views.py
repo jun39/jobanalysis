@@ -3,12 +3,12 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from .models import Company
 from .forms import CompanyForm
-from .forms import SearchForm
+from .forms import FindForm
 def index(request):
     params = {
         'title':'登録した企業情報',
         'message':'全ての登録した企業情報',
-        'form':SearchForm(),
+        'form':FindForm(),
         'data':[],
     }
     if (request.method == 'POST'):
@@ -16,7 +16,7 @@ def index(request):
         na = request.POST['name']
         item = Company.objects.get(id = num,company=na)
         params['data'] = [item]
-        params['form'] = SearchForm(request.POST)
+        params['form'] = FindForm(request.POST)
     else:
         params['data'] = Company.objects.all()
     return render(request,'inputApp/list.html',params)
