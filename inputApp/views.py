@@ -18,7 +18,7 @@ def index(request):
         params['data'] = [item]
         params['form'] = FindForm(request.POST)
     else:
-        params['data'] = Company.objects.all()
+        params['data'] = Company.objects.all().order_by('sales').reverse()
     return render(request,'inputApp/list.html',params)
 
 def create(request):
@@ -57,3 +57,22 @@ def delete(request,num):
        'obj':company,
     }
     return render(request,'inputApp/delete.html',params)
+
+def find(request):
+    if(request.method == 'POST'):
+        msg = '検索結果'
+        form = FindForm(request.POST)
+        str = request.POST['find']
+        # リクエストされらformで指定したfind項目の値を取得している
+        data = Company.objects.all()[0:int(str)]
+    else:
+        msg = '企業情報'
+        form = FindForm()
+        data = Company.objects.all()
+    params ={
+        'title':'検索項目を入力してください',
+        'message':msg,
+        'form':form,
+        'data':data,
+    }
+    return render(request,'inputApp/find.html',params)
