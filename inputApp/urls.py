@@ -8,4 +8,6 @@ urlpatterns = [
     path('edit/<int:num>',views.edit,name='edit'),
     path('delete/<int:num>',views.delete,name='delete'),
     path('find',views.find,name = 'find'),
+    path('comment/',views.comment,name='comment'),
+    path('comment/<int:page>',views.comment,name='comment'),
 ]

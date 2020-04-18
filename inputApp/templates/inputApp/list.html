@@ -50,13 +50,21 @@
             <td>{{item.workingHours}}</td>
             <td><a href="{% url 'edit' item.id %}">edit</a></td>
             <td><a href="{% url 'delete' item.id %}">delete</a></td>
+            <td>
+                <ul>
+                    {% for ob in item.comment_set.all%}
+                     <li>{{ob.title}}</li>
+                     <li>{{ob.content}}</li>
+                    {% endfor %}
+                </ul>
+            </td>
         </tr>
         {% endfor %}
     </table>
 
     <div class="pagination">
         {% if data.has_previous %}
-           <a href="{% url 'index' %}">&lsaquo;最初のページa</a>
+           <a href="{% url 'index' %}">&lsaquo;最初のページ</a>
            <a href="{% url 'index' %}{{data.previous_page_number}}">&lsaquo;前のページ</a>
         {% endif %}
         <span class="current">
