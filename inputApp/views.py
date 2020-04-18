@@ -4,21 +4,22 @@ from django.shortcuts import redirect
 from .models import Company
 from .forms import CompanyForm
 from .forms import FindForm
-def index(request):
+from django.core.paginator import Paginator
+def index(request,num=1):
+    data = Company.objects.all()
+    page = Paginator(data,2)
     params = {
         'title':'登録した企業情報',
         'message':'全ての登録した企業情報',
         'form':FindForm(),
-        'data':[],
+        'data':page.get_page(num),
     }
-    if (request.method == 'POST'):
-        num = request.POST['id']
-        na = request.POST['name']
-        item = Company.objects.get(id = num,company=na)
-        params['data'] = [item]
-        params['form'] = FindForm(request.POST)
-    else:
-        params['data'] = Company.objects.all().order_by('sales').reverse()
+    # if (request.method == 'POST'):
+    #     num = request.POST['id']
+    #     na = request.POST['name']
+    #     item = Company.objects.get(id = num,company=na)
+    #     params['data'] = [item]
+    #     params['form'] = FindForm(request.POST)
     return render(request,'inputApp/list.html',params)
 
 def create(request):
