@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from .models import Company
+from .models import Company,Comment
 from .forms import CompanyForm
-from .forms import FindForm
+from .forms import FindForm,CommentForm
 from django.core.paginator import Paginator
 def index(request,num=1):
     data = Company.objects.all()
@@ -77,3 +77,17 @@ def find(request):
         'data':data,
     }
     return render(request,'inputApp/find.html',params)
+
+def comment(request,page=1):
+    if(request.method == 'POST'):
+        obj = Comment()
+        form = CommentForm(request.POST,instance=obj)
+        form.save()
+    data = Comment.objects.all().reverse()
+    paginator = Paginator(data,2)
+    params ={
+        'title':'コメント',
+        'form':CommentForm(),
+        'data':paginator.get_page(page),
+    }
+    return render(request,'inputApp/comment.html',params)
