@@ -21,31 +21,35 @@ class UserManager(UserManager):
         username = self.model.normalize_username(username)
         email = self.normalize_email(email)
         # 作成したus
-        user = self.model(email=email, **extra_fields)
+        user = self.model(username=username,email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         # データベースに追加
         return user
 
-    def create_user(self, email, password=None, **extra_fields):
+    def create_user(self, username,email, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
-        return self._create_user(email, password, **extra_fields)
+        return self._create_user(usename,email, password, **extra_fields)
 
-    def create_superuser(self, email, password, **extra_fields):
+    def create_superuser(self,username, email, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         if extra_fields.get('is_staff') is not True:
             raise ValueError('Superuser must have is_staff=True.')
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
-        return self._create_user(email, password, **extra_fields)
+        return self._create_user(username,email, password, **extra_fields)
 
 
 class User(AbstractBaseUser, PermissionsMixin):
     """カスタムユーザーモデル."""
 
-    email = models.EmailField(_('email address'), unique=True)
+    email = models.EmailField(
+        verbose_name='emailアドレスを入力してください',
+        max_length=255,
+        unique=True,
+    )
 
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
@@ -69,7 +73,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     EMAIL_FIELD = 'email'
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
 
     class Meta:
