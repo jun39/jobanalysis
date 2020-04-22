@@ -5,7 +5,7 @@ from django.contrib.auth.base_user import AbstractBaseUser,BaseUserManager
 from django.utils.translation import ugettext_lazy as _
 # 上のやつがわからない
 from django.utils import timezone
-
+from inputApp.models import Comment,Company
 
 
 
@@ -53,7 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
-
+    AspiringIndustry = models.ForeignKey(AspiringIndustry)
     is_staff = models.BooleanField(
         _('staff status'),
         default=False,
