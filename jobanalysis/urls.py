@@ -19,5 +19,7 @@ urlpatterns = [
     path('admin/',admin.site.urls),
     path('inputApp/', include('inputApp.urls')),
     path('search/',include('search.urls')),
-    path('', include('accounts.urls')),
+    # path('', include('accounts.urls')),
+    path('', include(('accounts.urls', 'accounts'), namespace='accounts')),
 ]
+# テンプレートでレイアウトを使うにはテンプレートのディレクトリ名を名前空間を指定する

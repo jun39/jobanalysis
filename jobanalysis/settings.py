@@ -135,5 +135,5 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'accounts.User'
 
 # 自作したログインページを設定、直接ログインページに登った際のリダイレクトも設定
-LOGIN_URL = 'register:login'
-LOGIN_REDIRECT_URL = 'register:top'
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'accounts:top'

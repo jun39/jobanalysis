@@ -8,7 +8,7 @@ class Industry(models.Model):
 
 
 class Company(models.Model):
-        industry = models.ForeignKey(Industry,on_delete=models.CASCADE)
+        industry = models.ForeignKey(Industry,on_delete=models.CASCADE,default=1,)
         # マイグレーションし直す
         company = models.CharField(max_length=50)
         location = models.CharField(max_length=50)
