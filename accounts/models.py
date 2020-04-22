@@ -1,21 +1,30 @@
 from django.db import models
 from django.core.mail import send_mail
-from django.contrib.auth.models import PermissionsMixin, UserManager,AbstractUser
+from django.contrib.auth.models import PermissionsMixin, UserManager
+from django.contrib.auth.base_user import AbstractBaseUser,BaseUserManager
 from django.utils.translation import ugettext_lazy as _
+# 上のやつがわからない
 from django.utils import timezone
 
 
-class CustomUserManager(UserManager):
+
+
+class UserManager(UserManager):
     """ユーザーマネージャー"""
     use_in_migrations = True
 
-    def _create_user(self, email, password, **extra_fields):
-        if not email:
+    def _create_user(self, username,email, password, **extra_fields):
+        if not username:
+            raise ValueError('The given username must be set')
+        elif not email:
             raise ValueError('The given email must be set')
+        username = self.model.normalize_username(username)
         email = self.normalize_email(email)
+        # 作成したus
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
+        # データベースに追加
         return user
 
     def create_user(self, email, password=None, **extra_fields):
@@ -33,11 +42,11 @@ class CustomUserManager(UserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-class User(AbstractUser, PermissionsMixin):
-    """カスタムユーザーモデル
-    usernameを使わず、emailアドレスをユーザー名として使うようにしています。
-    """
+class User(AbstractBaseUser, PermissionsMixin):
+    """カスタムユーザーモデル."""
+
     email = models.EmailField(_('email address'), unique=True)
+
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
 
@@ -57,7 +66,7 @@ class User(AbstractUser, PermissionsMixin):
     )
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
-    objects = CustomUserManager()
+    objects = UserManager()
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
@@ -83,4 +92,9 @@ class User(AbstractUser, PermissionsMixin):
 
     @property
     def username(self):
+        """username属性のゲッター
+
+        他アプリケーションが、username属性にアクセスした場合に備えて定義
+        メールアドレスを返す
+        """
         return self.email
