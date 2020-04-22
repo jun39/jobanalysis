@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Industry(models.Model):
-        industry_name = models.CharField(max_length=50)
+        industry_name = models.CharField(default='業界名',max_length=50)
         def __str__(self):
             return 'industry:id'+str(self.id) + '業界名'+ str(self.industry_name)
 

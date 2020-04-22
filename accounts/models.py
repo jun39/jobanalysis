@@ -43,7 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     """カスタムユーザーモデル."""
 
     email = models.EmailField(max_length=255,unique=True,)
-
+    username = models.CharField(max_length=50,unique=True)
     # first_name = models.CharField(_('first name'), max_length=30, blank=True)
     # last_name = models.CharField(_('last name'), max_length=150, blank=True)
     # AspiringIndustry = models.ForeignKey()
