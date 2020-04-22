@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'inputApp.apps.InputappConfig',
     'accounts.apps.AccountsConfig',
-    'search.apps.SearchConfig'
+    'search.apps.SearchConfig',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +130,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#自作したユーザーモデルを設定
+AUTH_USER_MODEL = 'accounts.User'
+
+# 自作したログインページを設定、直接ログインページに登った際のリダイレクトも設定
+LOGIN_URL = 'register:login'
+LOGIN_REDIRECT_URL = 'register:top'

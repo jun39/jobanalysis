@@ -1,7 +1,15 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+class Industry(models.Model):
+        industry_name = models.CharField(max_length=50)
+        def __str__(self):
+            return 'industry:id'+str(self.id) + '業界名'+ str(self.industry_name)
+
+
 class Company(models.Model):
+        industry = models.ForeignKey(Industry,on_delete=models.CASCADE)
+        # マイグレーションし直す
         company = models.CharField(max_length=50)
         location = models.CharField(max_length=50)
         office = models.CharField(max_length=50)
@@ -25,7 +33,3 @@ class Comment(models.Model):
         class Meta:
             ordering = ('pub_date',)
 
-class Industry(models.Model):
-        industry_name = models.CharField(max_length=50)
-        def __str__(self):
-            return 'industry:id'+str(self.id) + '業界名'+ str(self.industry_name)
