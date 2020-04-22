@@ -1,6 +1,4 @@
-from django.contrib.auth.forms import (
-    AuthenticationForm
-)
+from django.contrib.auth.forms import AuthenticationForm
 
 # ログインフォームを作成する
 class LoginForm(AuthenticationForm):
